@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GDPR-AI-assistant", "GDPR-AI-assistant.csproj", "{90F85B10-F46C-7E87-313F-B1F7F9E5166A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90F85B10-F46C-7E87-313F-B1F7F9E5166A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90F85B10-F46C-7E87-313F-B1F7F9E5166A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90F85B10-F46C-7E87-313F-B1F7F9E5166A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90F85B10-F46C-7E87-313F-B1F7F9E5166A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D358061-767B-47F7-B3B8-84F3B3D1DC5C}
+	EndGlobalSection
+EndGlobal
