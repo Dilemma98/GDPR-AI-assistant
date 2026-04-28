@@ -1,0 +1,13 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+
+    /* 🔥 mjukare gradient */
+    background: linear-gradient(135deg, #f4f8fb 0%, #eef7ff 50%, #e6f0ff 100%);
+}

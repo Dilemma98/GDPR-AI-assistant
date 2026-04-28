@@ -1,0 +1,158 @@
+.chatContainer {
+    width: 70%;
+    margin: 0 auto 2em auto;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 1.5em;
+    box-shadow: 0px 17px 40px -3px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 75vh; /* Fast höjd */
+}
+
+/* ===== MESSAGES ===== */
+.messages {
+    padding: 1.5em;
+    flex: 1; /* Tar upp all tillgänglig plats */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+/* ===== MESSAGE BASE ===== */
+.message {
+    display: flex;
+    flex-direction: column;
+    max-width: 75%;
+    gap: 0.3em;
+}
+
+/* ===== USER MESSAGE ===== */
+.message.user {
+    align-self: flex-end;
+    align-items: flex-end;
+}
+
+.message.user p {
+    background: linear-gradient(135deg, #1f3b5b, #1a2f4a);
+    color: white;
+
+    border-radius: 18px;
+    border-bottom-right-radius: 6px;
+
+    box-shadow: 0 6px 20px rgba(26,47,74,0.25);
+}
+
+/* ===== ASSISTANT MESSAGE ===== */
+.message.assistant {
+    align-self: flex-start;
+    align-items: flex-start;
+}
+
+.message.assistant {
+    background: #f1f6fb;
+    padding: 1.2em;
+    border-radius: 16px;
+    max-width: 75%;
+}
+
+.message.assistant .meta {
+    font-size: 0.8rem;
+    color: #7c91a6;
+    margin-bottom: 0.5em;
+}
+
+/* ===== TEXT ===== */
+.message p {
+    margin: 0;
+    padding: 1em 1.3em;
+    line-height: 1.65;
+    font-size: 0.95rem;
+}
+
+/* ===== LABEL ===== */
+.label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #7d93a8;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 0 0.6em;
+}
+
+/* ===== INPUT AREA ===== */
+.input-area {
+    /* Sticky längst ner tack vare flex-layout */
+    flex-shrink: 0;
+    display: flex;
+    gap: 0.8em;
+    padding: 1em 1.5em;
+    border-top: 1px solid rgba(0, 0, 0, 0.07);
+    background: rgba(255, 255, 255, 0.5);
+    align-items: flex-end;
+}
+
+/* ===== INPUT ===== */
+.input-area textarea {
+    flex: 1;
+
+    border: 1px solid #dbe7f0;
+    border-radius: 14px;
+
+    padding: 0.9em 1em;
+    font-size: 0.95rem;
+
+    background: white;
+    outline: none;
+
+    transition: all 0.2s ease;
+}
+
+.input-area textarea:focus {
+    border-color: #2d4e73;
+    box-shadow: 0 0 0 3px rgba(45,78,115,0.1);
+}
+
+/* ===== BUTTON ===== */
+.input-area button {
+    background: linear-gradient(135deg, #1f3b5b, #1a2f4a);
+    color: white;
+
+    border: none;
+    border-radius: 14px;
+
+    padding: 0.9em 1.6em;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.input-area button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(26,47,74,0.25);
+}
+
+.input-area button:active {
+    transform: scale(0.96);
+}
+
+.input-area button:disabled {
+    background: #9db2c3;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* ===== SCROLLBAR (nice touch) ===== */
+.messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background: rgba(30,60,90,0.2);
+    border-radius: 10px;
+}

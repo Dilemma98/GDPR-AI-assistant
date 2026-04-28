@@ -24,7 +24,19 @@ builder.Services.AddSingleton(sp =>
 builder.Services.AddSingleton<PdfIngestionService>();
 builder.Services.AddSingleton<RagService>();
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors();
 
 if (app.Environment.IsDevelopment())
 {

@@ -17,19 +17,33 @@ public class PdfIngestionService
     {
         var chunks = new List<string>();
 
-        foreach( var pdfPath in Directory.GetFiles(_documentsPath, "*.pdf"))
+        foreach (var pdfPath in Directory.GetFiles(_documentsPath, "*.pdf"))
         {
             using var document = PdfDocument.Open(pdfPath);
 
             var fullText = string.Join(" ", document.GetPages()
                 .Select(p => p.Text));
 
-            // Split text to smaller parts
-            for (int i = 0; i < fullText.Length; i += chunkSize)
+            // Split per article
+            var articleSplits = System.Text.RegularExpressions.Regex
+               .Split(fullText, @"(?=Artikel\s+\d+)")
+               .Where(s => !string.IsNullOrWhiteSpace(s))
+               .ToList();
+
+            // If split worked, use it
+            if (articleSplits.Count > 10)
             {
-                var chunk = fullText.Substring(i, Math.Min(chunkSize, fullText.Length - i));
-                if(!string.IsNullOrWhiteSpace(chunk))
-                    chunks.Add(chunk);
+                chunks.AddRange(articleSplits);
+            }
+            else
+            {
+                // Fallback 
+                for (int i = 0; i < fullText.Length; i += chunkSize)
+                {
+                    var chunk = fullText.Substring(i, Math.Min(chunkSize, fullText.Length - i));
+                    if (!string.IsNullOrWhiteSpace(chunk))
+                        chunks.Add(chunk);
+                }
             }
         }
         return chunks;
