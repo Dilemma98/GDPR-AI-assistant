@@ -11,13 +11,13 @@
 
 .header-left {
     display: flex;
-    gap: 0.8em;
+    gap: 4em;
     align-items: center;
 }
 
 .icon {
-    width: 60px;
-    height: 60px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     background: #e8f1fb;
     display: flex;

@@ -28,28 +28,48 @@ public class RagService
         await IndexDocumentsAsync();
 
         // Hitta relevanta chunks via keyword-matchning
-        var keywords = question.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var stopWords = new[] { "vad", "är", "och", "det", "som", "en", "i", "på", "för" };
+
+        var keywords = question
+            .ToLower()
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Where(w => !stopWords.Contains(w))
+            .ToList();
 
         var topChunks = _chunks
-            .Select(chunk => (
-                Text: chunk,
-                Score: keywords.Count(kw => chunk.ToLower().Contains(kw.ToLower()))
-            ))
-            .OrderByDescending(x => x.Score)
-            .Take(3)
-            .Select(x => x.Text.Length > 2000 ? x.Text.Substring(0, 2000) : x.Text)
-            .ToList();
+    .Select(chunk =>
+    {
+        var score = keywords.Count(kw => chunk.ToLower().Contains(kw))
+            + (chunk.Length < 1500 ? 2 : 0);
+        if (chunk.ToLower().Contains("artikel"))
+            score += 2;
+
+        return new { Text = chunk, Score = score };
+    })
+    .Where(x => x.Score > 0)
+    .OrderByDescending(x => x.Score)
+    .Take(3)
+    .ToList();
+
+
 
         // Fallback om inga chunks matchade
         if (!topChunks.Any())
-            topChunks = _chunks.Take(3).ToList();
+        {
+            return "Jag hittar inte detta i GDPR-texten jag har.";
+        }
 
-        var context = string.Join("\n\n", topChunks);
+        var context = string.Join("\n\n", topChunks
+    .Select(x => x.Text.Length > 1200
+        ? x.Text.Substring(0, 1200)
+        : x.Text));
 
         // Build prompt
         var prompt = $"""
             Du är en GDPR-expert. Svara på frågan baserat ENDAST på följande utdrag från GDPR-förordningen.
-            Om svaret inte finns i texten, var då tydlig med det. Om frågan inte är GDPR-relaterad, försök leda tillbaka till GDPR.
+           Om svaret inte finns i texten, säg: 'Jag hittar inte detta i den tillgängliga GDPR-texten.' Gissa aldrig.
+            
+            Om frågan inte är GDPR-relaterad, försök leda tillbaka till GDPR.
 
             GDPR-utdrag:
             {context}

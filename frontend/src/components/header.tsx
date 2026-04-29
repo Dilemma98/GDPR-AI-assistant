@@ -1,10 +1,11 @@
 import "./header.css";
+import SafetyCheckIcon from '@mui/icons-material/SafetyCheck';
 
 export default function Header() {
   return (
     <header className="top">
       <div className="header-left">
-        <div className="icon">🔒</div>
+        <div className="icon"><SafetyCheckIcon sx={{ fontSize: 80 }} /></div>
         <div>
           <h1>Din AI-assistent inom GDPR-frågor</h1>
           <p>

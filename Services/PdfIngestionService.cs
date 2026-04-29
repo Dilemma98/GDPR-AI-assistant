@@ -24,26 +24,21 @@ public class PdfIngestionService
             var fullText = string.Join(" ", document.GetPages()
                 .Select(p => p.Text));
 
+            fullText = System.Text.RegularExpressions.Regex.Replace(fullText, @"\s+", " ");
+
             // Split per article
             var articleSplits = System.Text.RegularExpressions.Regex
-               .Split(fullText, @"(?=Artikel\s+\d+)")
-               .Where(s => !string.IsNullOrWhiteSpace(s))
+               .Split(fullText, @"(?=Artikel\s*\d+)")
+               .Where(s => !string.IsNullOrWhiteSpace(s) && s.Length > 200)
                .ToList();
 
             // If split worked, use it
-            if (articleSplits.Count > 10)
+            chunks.AddRange(articleSplits);
+
+            foreach (var chunk in articleSplits.Take(5))
             {
-                chunks.AddRange(articleSplits);
-            }
-            else
-            {
-                // Fallback 
-                for (int i = 0; i < fullText.Length; i += chunkSize)
-                {
-                    var chunk = fullText.Substring(i, Math.Min(chunkSize, fullText.Length - i));
-                    if (!string.IsNullOrWhiteSpace(chunk))
-                        chunks.Add(chunk);
-                }
+                Console.WriteLine("---- CHUNK ----");
+                Console.WriteLine(chunk.Substring(0, Math.Min(200, chunk.Length)));
             }
         }
         return chunks;
